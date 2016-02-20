@@ -2,13 +2,14 @@ from datetime import datetime
 import random as r
 import re
 import ftplib
-import BotElConfig
 
 class BotElLog():
     """ Logs text into a file.
     """
-    def __init__(self):
-        bec = BotElConfig.BotElConfig()
+    def __init__(self, bec=None):
+        if bec == None:
+            import BotElConfig    
+            bec = BotElConfig.BotElConfig()
         options = bec.getConfig("InputLog")
         self.prefix = options["LOG_PREFIX"] or "Saminga"
         self.username = options["LOG_USERNAME"]
@@ -58,14 +59,14 @@ class BotElLog():
         with open(self.curlog,"a+") as file:
             file.write(htext)
         
-    def stopLog(self):
+    def stopLog(self, upload=True):
         """ Writes closing HTML and closes the log.
         """
         with open(self.curlog, "a+") as file:
             htext = "</div>\n</body>\n</html>"
             file.write(htext)
         output = "Okay, I stopped logging."
-        if self.username:
+        if self.username and upload:
             with open(self.curlog, "rb+") as file:
                 with ftplib.FTP(self.server,self.username,self.password) as ftp:
                     ftp.cwd(self.cwd)
