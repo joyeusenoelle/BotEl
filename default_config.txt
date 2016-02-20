@@ -1,0 +1,42 @@
+# Configuration file for BotEl TinyMUX bot
+# Original by Noëlle Anthony
+# BotEl is released under the GNU Public License 3.0
+
+# Customize this file and save it as "config.txt".
+# Add your own values after the = sign.
+
+# SECTION: General
+
+# The username the bot uses to connect to the MUSH
+MUSH_USERNAME=
+# The password the bot uses to connect to the MUSH
+MUSH_PASSWORD=
+# The address of the MUSH server
+MUSH_SERVER=
+# The port of the MUSH server
+MUSH_PORT=
+# The username of the bot's "owner". This is usually your own username.
+MUSH_OWNER=
+# The number of times the bot should try to reconnect if the network drops
+CONNECT_ATTEMPTS=10
+
+# SECTION: InputLog
+
+# The name you want used to identify the server's logs.
+LOG_PREFIX=
+
+# You can leave the rest of these blank if you don't want to upload the log once it's done
+
+# The server to which to upload the final log
+LOG_SERVER=
+# The username used to log into that server (NOT the MUSH server)
+LOG_USERNAME=
+# The password used to log into that server
+LOG_PASSWORD=
+# The directory into which to upload the log, relative to the base directory
+# Leave off the trailing slash!
+LOG_CWD=
+# The URL used to access the final log
+LOG_URL=
+
+

@@ -1,19 +1,21 @@
-import sys
 import telnetlib as tn
 import importlib as imp
 import BotElLib as bel
+import BotElConfig as config
 from time import sleep
 
 class BotEl:
     VERSION = "0.3.0"
     
-    def __init__(self, username, password, server, port, owner, attempts=None):
-        self.username = username
-        self.password = password
-        self.server = server
-        self.port = int(port)
-        self.owner = owner
-        self.attempts = attempts or 10
+    def __init__(self, configfile=None):
+        bec = config.BotElConfig(configfile)
+        options = bec.getConfig("General")
+        self.username = options["MUSH_USERNAME"]
+        self.password = options["MUSH_PASSWORD"]
+        self.server = options["MUSH_SERVER"]
+        self.port = int(options["MUSH_PORT"])
+        self.owner = options["MUSH_OWNER"]
+        self.attempts = int(options["CONNECT_ATTEMPTS"]) or 10
         self.getlibs(True)
         print("BotEl v{} starting up.".format(self.VERSION))
         
@@ -58,9 +60,8 @@ class BotEl:
         if not init:
             imp.reload(bel)
         self.libraries = bel.BotElLib(self.username, self.owner)
-
+           
 if __name__ == "__main__":
-    username, password, server, port, owner = sys.argv[1:5]        
-    be = BotEl(username, password, server, port, owner)
+    be = BotEl()
     be.start()
     be.listen()
