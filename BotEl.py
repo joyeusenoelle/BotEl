@@ -17,6 +17,7 @@ class BotEl:
         self.owner = options["MUSH_OWNER"]
         self.attempts = int(options["CONNECT_ATTEMPTS"]) or 10
         self.getlibs(True)
+        self.buffer = ""
         print("BotEl v{} starting up.".format(self.VERSION))
         
     def start(self):
@@ -45,8 +46,13 @@ class BotEl:
                 else:
                     out = self.libraries.textmatch(g)
                     if out != None:
-                        self.t.write(bytes("{}\n".format(out),"UTF-8"))
-                        print("Sent text: {}.".format(out))
+                        if out == self.buffer:
+                            sleep(5)
+                            continue
+                        else:
+                            self.buffer = out
+                            self.t.write(bytes("{}\n".format(out),"UTF-8"))
+                            print("Sent text: {}.".format(out))
             except KeyboardInterrupt:
                 break
             except EOFError:

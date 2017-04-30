@@ -105,7 +105,7 @@ class BotElINGen():
                 self.characters[fullid]["attunements"].append(attunement)
                 skillpoints = skillpoints - 10
                 # Attunements!
-        self.characters[fullid]["cpdelta"] = self.SKILLPOINTS - sum(skills.values())
+        self.characters[fullid]["cpdelta"] = self.SKILLPOINTS - (sum(skills.values()) + ((len(self.characters[fullid]["attunements"])-1)*10))
         skills["Language (Local)"] = 3 # the character gets this for free, so don't count it in the delta
         self.characters[fullid]["skills"] = skills
         self.saveCharacters()

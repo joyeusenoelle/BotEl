@@ -224,6 +224,22 @@ class BotElLib:
             (This is limited to commands the bot can execute.)
         """
         return "{}".format(match.group(1))
+
+    def draw(self):
+        """ Ridiculousness.
+        """
+        return "{}:hands {} a picture of a cow.".format(self.ooc or "", match.group(1))
+
+    def kellyanne(self,match):
+        with open("countries.txt", "r") as f:
+            countries = f.read().split("\n")
+        with open("attack_types.txt","r") as f:
+            attack_types = f.read().split("\n")
+        with open("us_places.txt","r") as f:
+            us_places = f.read().split("\n")
+        text_strings = ["Remember the {0} {1} - why we must restrict immigrants from {2}.","We have to protect ourselves from {2} because of the {0} {1}.","The media didn't report the {1} in {0}. No more aggression from {2}!","How can we admit refugees from {2} after the {1} in {0}?","We must close our borders against {2} because of the {0} {1}."]
+        tweet = random.choice(text_strings).format(random.choice(us_places),random.choice(attack_types),random.choice(countries))
+        return "{}'{} {}".format(self.ooc or "",match.group(1),tweet)
         
     def other(self,match):
         """ If the text is directed to BotEl, but it doesn't match any of the
@@ -234,6 +250,8 @@ class BotElLib:
         if match.group(2)[-1] == "?":
             return "{}'{} {}".format(self.ooc or "", match.group(1), random.choice(self.responses))
         return "{}'{} Sorry, I didn't understand this: {}".format(self.ooc or "",match.group(1),match.group(2))
+
+        
 
     def makeRegexes(self):
         """ Creates the regular expressions. These are defined after the rest
@@ -255,4 +273,7 @@ class BotElLib:
             re.compile(r"([^\[]+) \[to {0}\]: remind ([^ ]+) ([^ ]+) (.+)".format(self.name)): self.remind,
             re.compile(r"([^\[]+) has connected."): self.login,
             re.compile(r"([^\[]+) \[to {0}\]: inchar[ ]?(.*)".format(self.name)): self.inchar,
-            re.compile(r"{0} pages: command (.+)".format(self.owner)): self.cmd}
+            re.compile(r"{0} pages: command (.+)".format(self.owner)): self.cmd,
+            re.compile(r"([^\[]+) \[to {0}\]: draw".format(self.name)): self.draw,
+            re.compile(r"([^\[]+) \[to {0}\]: kellyanne".format(self.name)): self.kellyanne
+        }
