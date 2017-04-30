@@ -6,9 +6,10 @@ import ftplib
 class BotElLog():
     """ Logs text into a file.
     """
-    def __init__(self, bec=None):
+    def __init__(self, prnt, bec=None):
+        self.prnt = prnt
         if bec == None:
-            import BotElConfig    
+            import BotElConfig
             bec = BotElConfig.BotElConfig()
         options = bec.getConfig("InputLog")
         self.prefix = options["LOG_PREFIX"] or "Saminga"
@@ -58,7 +59,7 @@ class BotElLog():
 
         with open(self.curlog,"a+") as file:
             file.write(htext)
-        
+
     def stopLog(self, upload=True):
         """ Writes closing HTML and closes the log.
         """

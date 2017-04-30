@@ -4,7 +4,8 @@ from datetime import datetime
 class BotElINGen():
     """ Creates random In Nomine characters.
     """
-    def __init__(self, maxforces=None):
+    def __init__(self, prnt=None, maxforces=None):
+        self.prnt = prnt
         self.MAXFORCES = maxforces or 9
         self.SKILLPOINTS = self.MAXFORCES * 4
         self.characters = dict()
@@ -20,7 +21,7 @@ class BotElINGen():
         self.areaknowledge = ["Heaven","Hell","Marches","Caribbean","New York","New England","Florida","Atlanta","Texas","California","American Southwest","Pacific Northwest","Portland","Toronto","Vancouver","Mexico","Central America","Brazil","Argentina","England","London","France","Paris","Norway","Scandinavia","Greece","Egypt","North Africa","Sub-Saharan Africa","Saudi Arabia","Middle East","Russia","Moscow","China","Shanghai","Hong Kong","Japan","Hokkaido","Tokyo","Australia","Sydney","Melbourne","Perth","Fiji","Antarctica"]
         self.knowledge = ["Astronomy","Biology","Literature","Aircraft","American Football","Football","Baseball","Sumo","Giant Robot Anime","German Cuisine","Catholicism","Islam","Buddhism","Shinto","Architecture","Eschatology","Numinology","Role-Playing Games","Spelunking","Parliamentary Procedure","Olympic History","18th-Century Botanical Manuals","Photography","Marine Biology","Entomology","Archaeology"]
         self.language = ["Mandarin","Spanish","English","Hindi","Arabic","Portuguese","Bengali","Russian","Japanese","Punjabi","German","Javanese","Wu","Malay","Telugu","Vietnamese","Korean","French","Marathi","Tamil","Urdu","Turkish","Italian","Yue (Cantonese)", "Thai", "Latin", "Greek", "Ancient Egyptian", "Apache", "Ainu", "Aleut", "Inuit", "Mayan"]
-        
+
     def createCharacter(self, name=None, side=None, ret=False):
         name = name or random.choice(self.namelist)
         id = random.randint(10000,99999)
@@ -37,8 +38,8 @@ class BotElINGen():
             forces[random.choice(list(forces.keys()))] += 1
         for realm, score in forces.items():
             self.characters[fullid][realm] = score
-        ability_points = {"Corporeal":(forces["Corporeal"]*4), 
-                  "Ethereal":(forces["Ethereal"]*4), 
+        ability_points = {"Corporeal":(forces["Corporeal"]*4),
+                  "Ethereal":(forces["Ethereal"]*4),
                   "Celestial":(forces["Celestial"]*4)}
         abilities = {"Corporeal":{"Strength":1,"Agility":1},
                      "Ethereal":{"Intellect":1, "Precision":1},
@@ -50,7 +51,7 @@ class BotElINGen():
             #print("It's a demon or a Kyrio.")
             abilities["Celestial"]["Will"] += 2
         else:
-            #print("It's neither.")  
+            #print("It's neither.")
             abilities["Celestial"]["Perception"] += 1
             abilities["Celestial"]["Will"] += 1
         for realm in abilities.keys():
@@ -112,7 +113,7 @@ class BotElINGen():
         if ret:
             return self.printCharacter(fullid, True)
         self.printCharacter(fullid)
-        
+
     def listCharacters(self, ret=False):
         if len(self.characters) == 0:
             output = "No characters stored."
@@ -122,8 +123,8 @@ class BotElINGen():
                 output += "{}: {} ({} of {})\n".format(key, value['name'], value['type'], value['word'])
         if ret:
             return output
-        print(output)
-    
+        self.prnt.output(output)
+
     def printCharacter(self, character, ret=False):
         if character not in self.characters.keys():
             output = "I don't have a character by that name."
@@ -151,14 +152,14 @@ class BotElINGen():
         if ret:
             return output
         else:
-            print(output)
-            
+            self.prnt.output(output)
+
     def saveCharacters(self):
         try:
             with open("incharacters.txt", "w") as file:
                 file.write(str(self.characters))
         except:
-            print("Couldn't write to the character file.")
+            self.prnt.output("Couldn't write to the character file.")
 
     def loadCharacters(self):
         try:
@@ -166,10 +167,10 @@ class BotElINGen():
                 text = file.read()
             self.characters = eval(text)
         except:
-            print("Couldn't read from the character file.", end=" ")
+            self.prnt.output("Couldn't read from the character file.", end=" ")
             try:
                 file = open('incharacters.txt', 'w')
                 file.close()
-                print("Created the character file.")
+                self.prnt.output("Created the character file.")
             except:
-                print("Couldn't create the character file either.")
+                self.prnt.output("Couldn't create the character file either.")

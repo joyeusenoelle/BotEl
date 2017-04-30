@@ -22,23 +22,24 @@ def reloadall():
     getreminders()
 
 class BotElLib:
-    def __init__(self, name, owner):
+    def __init__(self, name, owner, prnt):
         """ Initialize BotElLib. Required parameters:
             name (str) - the MUSH name of the BotEl object
             owner (str) - the MUSH name of the BotEl object's owner
         """
         self.name = str(name)
         self.owner = str(owner)
+        self.prnt = prnt
         self.ooc = None
         self.logging = False
         self.reminders = {}
         self.makeRegexes()
         self.otherr = re.compile(r"([^\[]+) \[to {}\]: (.+)".format(self.name))
         self.getreminders()
-        self.markov = markov.BotElMarkov()
-        self.wiki = wiki.BotElWiki()
-        self.logger = logger.BotElLog()
-        self.ingen = ingen.BotElINGen()
+        self.markov = markov.BotElMarkov(self.prnt)
+        self.wiki = wiki.BotElWiki(self.prnt)
+        self.logger = logger.BotElLog(self.prnt)
+        self.ingen = ingen.BotElINGen(self.prnt)
         self.responses = ["It is certain.",
             "It is decidedly so.",
             "Without a doubt.",

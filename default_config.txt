@@ -19,6 +19,8 @@ MUSH_PORT=
 MUSH_OWNER=
 # The number of times the bot should try to reconnect if the network drops
 CONNECT_ATTEMPTS=10
+# Whether the bot should echo its output to stdout
+VERBOSE=False
 
 # SECTION: InputLog
 
@@ -38,5 +40,3 @@ LOG_PASSWORD=
 LOG_CWD=
 # The URL used to access the final log
 LOG_URL=
-
-

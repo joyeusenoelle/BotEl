@@ -1,13 +1,14 @@
 import re, urllib.request, urllib.parse
 
 class BotElWiki():
-    """ Fetches the introduction of a Wikipedia article and strips it of 
+    """ Fetches the introduction of a Wikipedia article and strips it of
         characters that aren't MUSH-safe.
     """
-    def __init__(self):
+    def __init__(self, prnt):
+        self.prnt = prnt
         self.EOS = ['.', '?', '!']
         self.cache = dict()
-    
+
     def smartTruncate(self, content, length=100, suffix='...'):
         """ Truncates text at no more than the specified length, but never
             breaking in the middle of a word. Trails off with the specified
@@ -37,10 +38,10 @@ class BotElWiki():
         """
         if leader == None: leader = "\""
         if requester == None: requester = "Someone"
-        print("{} requested a wikipedia entry for {}.".format(requester, qstr))
+        self.prnt.output("{} requested a wikipedia entry for {}.".format(requester, qstr))
         qstr = urllib.parse.quote(qstr,':/')
         if qstr.lower() in self.cache.keys():
-            print("Entry was cached.")
+            self.prnt.output("Entry was cached.")
             return "quote {}".format(self.cache[qstr.lower()])
         url = "http://en.wikipedia.org/w/api.php?action=query&titles={}&prop=extracts&exintro=True&format=json&redirects".format(qstr)
         try:

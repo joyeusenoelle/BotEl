@@ -3,7 +3,8 @@ from random import choice
 class BotElMarkov():
     """ Creates Markov-chain paragraphs out of corpus texts.
     """
-    def __init__(self):
+    def __init__(self, prnt):
+        self.prnt = prnt
         self.EOS = ['.', '?', '!']
         self.leodict = self.gtext("leo.txt")
         self.kaidict = self.gtext("kai.txt")
@@ -13,7 +14,7 @@ class BotElMarkov():
     def buildDict(self, words):
         """
         Build a dictionary from the words.
- 
+
         (word1, word2) => [w1, w2, ...]  # key: tuple; value: list
         """
         dictionary = {}
@@ -59,14 +60,14 @@ class BotElMarkov():
                     break
             current_words = (second, third, fourth)
             first, second, third = current_words
-        
+
         return ' '.join(word_list)
-        
+
     def getChain(self, corpus, requester, leader=None):
         """ Exposes the chaining mechanism to BotEl.
         """
-        if leader == None: leader = "" 
-        print("{} requested a markov chain for {}.".format(requester, corpus))
+        if leader == None: leader = ""
+        self.prnt.output("{} requested a markov chain for {}.".format(requester, corpus))
         if corpus in self.dicts.keys():
             output = "quote "
             output += self.generateSentence(self.dicts[corpus])

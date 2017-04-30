@@ -3,6 +3,7 @@ import importlib as imp
 import BotElLib as bel
 import BotElConfig as config
 from time import sleep
+from datetime import datetime
 import sys
 
 class BotEl:
@@ -86,7 +87,7 @@ class BotEl:
     def getlibs(self, init):
         if not init:
             imp.reload(bel)
-        self.libraries = bel.BotElLib(self.username, self.owner)
+        self.libraries = bel.BotElLib(self.username, self.owner, self)
 
 if __name__ == "__main__":
     verbose = True if "-v" in sys.argv else False
