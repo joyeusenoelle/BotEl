@@ -12,6 +12,8 @@ class BotEl:
     def __init__(self, verbose=False, configfile=None):
         bec = config.BotElConfig(configfile)
         options = bec.getConfig("General")
+        self.verbose = True if (options["VERBOSE"] == "true" or verbose == True) else False
+        self.logfile = self.loginit()
         self.username = options["MUSH_USERNAME"]
         self.password = options["MUSH_PASSWORD"]
         self.server = options["MUSH_SERVER"]
@@ -20,11 +22,6 @@ class BotEl:
         self.attempts = int(options["CONNECT_ATTEMPTS"]) or 10
         self.getlibs(True)
         self.buffer = ""
-        if (options["VERBOSE"] == "true" or verbose == True):
-            self.verbose = True
-        else:
-            self.verbose = False
-        self.logfile = self.loginit()
         self.output("BotEl v{} starting up.".format(self.VERSION))
 
     def loginit(self):
@@ -45,7 +42,7 @@ class BotEl:
     def start(self):
         self.t = tn.Telnet(self.server, self.port)
         self.t.read_until(b"\"news\"")
-        self.speak(bytes("connect {0} {1}\n".format(self.username, self.password),"UTF-8"))
+        self.speak("connect {0} {1}\n".format(self.username, self.password))
         self.output("Connected to {}:{}. Owner is {}.".format(self.server, self.port, self.owner))
 
     def listen(self):
