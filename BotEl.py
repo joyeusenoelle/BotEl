@@ -58,7 +58,7 @@ class BotEl:
                         g = g.decode(errors="ignore").strip()
                 if g == "{} pages: reload".format(self.owner):
                     self.getlibs(False)
-                    self.speak(bytes("p {}=Okay, I reloaded everything.\n".format(self.owner),"UTF-8"))
+                    self.speak("p {}=Okay, I reloaded everything.\n".format(self.owner))
                     self.output("Reloaded libraries.")
                 elif g == "{} pages: shutdown".format(self.owner):
                     raise(KeyboardInterrupt)
@@ -70,8 +70,8 @@ class BotEl:
                             continue
                         else:
                             self.buffer = out
-                            self.speak(bytes("{}\n".format(out),"UTF-8"))
-                            self.output("Sent text: {}.".format(out))
+                            self.speak("{}\n".format(out))
+                            #self.output("Sent text: {}.".format(out))
             except KeyboardInterrupt:
                 break
             except EOFError:
