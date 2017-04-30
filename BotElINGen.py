@@ -167,7 +167,7 @@ class BotElINGen():
                 text = file.read()
             self.characters = eval(text)
         except:
-            self.prnt.output("Couldn't read from the character file.", end=" ")
+            self.prnt.output("Couldn't read from the character file.")
             try:
                 file = open('incharacters.txt', 'w')
                 file.close()
