@@ -48,6 +48,7 @@ class BotEl:
     def listen(self):
         while True:
             try:
+                self.logfile = self.loginit()
                 g = self.t.read_until(b'\r\n')
                 try:
                     g = g.decode(encoding="iso-8859-1").strip()
