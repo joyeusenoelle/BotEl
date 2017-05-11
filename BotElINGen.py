@@ -22,16 +22,39 @@ class BotElINGen():
         self.knowledge = ["Astronomy","Biology","Literature","Aircraft","American Football","Football","Baseball","Sumo","Giant Robot Anime","German Cuisine","Catholicism","Islam","Buddhism","Shinto","Architecture","Eschatology","Numinology","Role-Playing Games","Spelunking","Parliamentary Procedure","Olympic History","18th-Century Botanical Manuals","Photography","Marine Biology","Entomology","Archaeology"]
         self.language = ["Mandarin","Spanish","English","Hindi","Arabic","Portuguese","Bengali","Russian","Japanese","Punjabi","German","Javanese","Wu","Malay","Telugu","Vietnamese","Korean","French","Marathi","Tamil","Urdu","Turkish","Italian","Yue (Cantonese)", "Thai", "Latin", "Greek", "Ancient Egyptian", "Apache", "Ainu", "Aleut", "Inuit", "Mayan"]
 
-    def createCharacter(self, name=None, side=None, ret=False):
-        name = name or random.choice(self.namelist)
+    def createCharacter(self, args, ret=False):
+        largs = args.split(" ")
+        # Parse arguments
+        name = None
+        choir = None
+        side = None
+        word = None
+        if '-n' in largs:
+            name = largs[largs.index('-n') + 1]
+        else:
+            name = random.choice(self.namelist)
+        if '-c' in largs:
+            choir = largs[largs.index('-c') + 1]
+        if choir.lower() == "seraph":
+            choir = "Ser\uA66Eph"
+        if choir.lower() == "balseraph":
+            choir = "Balser\uA66Eph"
+        if choir in self.types["angel"] and side == None:
+            side = "angel"
+        elif choir in self.types["demon"] and side == None:
+            side = "demon"
+        if '-s' in largs:
+            side = largs[largs.index('-s') + 1]
+        if side not in ["angel","demon"]:
+            side = random.choice(["angel","demon"])
+        if '-w' in largs:
+            word = largs[largs.index('-s') + 1]
         id = random.randint(10000,99999)
         fullid = "{}{}".format(name,id)
         self.characters[fullid] = dict()
         self.characters[fullid]["name"] = name
-        if side not in ["angel","demon"]:
-            side = random.choice(["angel","demon"])
-        self.characters[fullid]["type"] = random.choice(self.types[side])
-        self.characters[fullid]["word"] = random.choice(self.words[side])
+        self.characters[fullid]["type"] = choir or random.choice(self.types[side])
+        self.characters[fullid]["word"] = word or random.choice(self.words[side])
         self.characters[fullid]["attunements"] = ["{} of {}".format(self.characters[fullid]["type"], self.characters[fullid]["word"])]
         forces = {"Corporeal":1, "Ethereal":1, "Celestial":1}
         while sum(forces.values()) < self.MAXFORCES:
