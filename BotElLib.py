@@ -215,7 +215,7 @@ class BotElLib:
     def inchar(self, match):
         """ If someone asks for a random In Nomine character.
         """
-        character = self.ingen.createCharacter(match, ret=True)
+        character = self.ingen.createCharacter(match.group(2), ret=True)
         character = character.replace("\n","%r")
         character = character.replace("\t","%t")
         return "quote {}".format(character)
