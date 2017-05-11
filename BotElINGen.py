@@ -33,8 +33,6 @@ class BotElINGen():
             llen = len(largs) - 2
             if '-n' in largs and llen >= largs.index('-n'):
                 name = largs[largs.index('-n') + 1]
-            else:
-                name = random.choice(self.namelist)
             if '-c' in largs and llen >= largs.index('-c'):
                 choir = largs[largs.index('-c') + 1]
             if choir.lower() == "seraph":
@@ -51,10 +49,10 @@ class BotElINGen():
                 side = random.choice(["angel","demon"])
             if '-w' in largs and llen >= largs.index('-w'):
                 word = largs[largs.index('-s') + 1]
-            id = random.randint(10000,99999)
+        id = random.randint(10000,99999)
         fullid = "{}{}".format(name,id)
         self.characters[fullid] = dict()
-        self.characters[fullid]["name"] = name
+        self.characters[fullid]["name"] = name or random.choice(self.namelist)
         self.characters[fullid]["type"] = choir or random.choice(self.types[side])
         self.characters[fullid]["word"] = word or random.choice(self.words[side])
         self.characters[fullid]["attunements"] = ["{} of {}".format(self.characters[fullid]["type"], self.characters[fullid]["word"])]
