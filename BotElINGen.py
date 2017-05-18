@@ -97,8 +97,8 @@ class BotElINGen():
             if choose in range(0,5):
                 # Skills!
                 skill = random.choice(self.skills[random.choice(skrealms)])
-                if (self.characters[fullid]["type"] == "Balseraph" or
-                    self.characters[fullid]["type"] == "Seraph") and skill == "Lying":
+                if (self.characters[fullid]["type"] == "Balser\uA66Eph" or
+                    self.characters[fullid]["type"] == "Ser\uA66Eph") and skill == "Lying":
                     continue
                 if skill == "Knowledge":
                     skill += " ({})".format(random.choice(self.knowledge))
