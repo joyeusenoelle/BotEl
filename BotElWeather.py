@@ -33,6 +33,7 @@ class BotElWeather():
         wthr = self.sanitize(wthr)
         return "quote {}".format(self.sanitize(wthr))
 
+
     def sanitize(self, text):
         text = re.sub(r"\n","%r",text)
         text = re.sub(r" ","%b",text)
