@@ -29,7 +29,8 @@ class BotElWeather():
         except:
             return "{}Sorry, I couldn't connect.".format(leader)
         wreg = re.compile(r"<pre>(.+)</pre>")
-        wthr = wreg.match(weather).group(1)
+        wthr = wreg.search(weather).group(1)
+
         wthr = self.sanitize(wthr)
         return "quote {}".format(self.sanitize(wthr))
 
