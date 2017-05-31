@@ -28,9 +28,10 @@ class BotElWeather():
             weather = urllib.request.urlopen(url).read().decode()
         except:
             return "{}Sorry, I couldn't connect.".format(leader)
-        wreg = re.compile(r"<pre>(.+)</pre>")
-        wthr = wreg.search(weather).group(1)
-
+        self.prnt.output("Received from server: {}".format(weather[:100]))
+        wthr = re.search("<pre>([^<]+)</pre>",weather)
+        wthr = wthr.group(1)
+        self.prnt.output("Found text: {}".format(wthr))
         wthr = self.sanitize(wthr)
         return "quote {}".format(self.sanitize(wthr))
 
@@ -38,8 +39,8 @@ class BotElWeather():
     def sanitize(self, text):
         text = re.sub(r"\n","%r",text)
         text = re.sub(r" ","%b",text)
-#        text = re.sub(r"\\","\\",text)
-        text = re.sub("%r%rNew.+$","",text)
+        #text = re.sub(r"\\","\\",text)
+        #text = re.sub("%r%rNew.+$","",text) # Don't think I need this anymore
         return text
 
     def isInt(self, s):
