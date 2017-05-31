@@ -17,33 +17,27 @@ class BotElWeather():
         self.prnt.output("{} requested the weather for {}".format(requester, passed))
         url = "http://wttr.in/{}?0T".format(arg)
         self.prnt.output("Sending request: {}".format(url))
-        req = urllib.request.Request(
-            url,
-            data=None,
-            headers={
-                'User-Agent':'curl'
-            }
-        )
+        ##req = urllib.request.Request( ## spoofing User-Agent to get text response
+        ##    url,
+        ##    data=None,
+        ##    headers={
+        ##        'User-Agent':'curl'
+        ##    }
+        ##)
         try:
-            weather = urllib.request.urlopen(req).read().decode()
+            weather = urllib.request.urlopen(url).read().decode()
         except:
             return "{}Sorry, I couldn't connect.".format(leader)
-
-        return "quote {}".format(self.sanitize(weather))
+        wreg = re.compile(r"<pre>(.+)</pre>")
+        wthr = wreg.match(weather).group(1)
+        wthr = self.sanitize(wthr)
+        return "quote {}".format(self.sanitize(wthr))
 
     def sanitize(self, text):
         text = re.sub(r"\n","%r",text)
         text = re.sub(r" ","%b",text)
-        text = re.sub(r"\\","\\\\",text)
-        text = re.sub(r"\\u2013","-",text)
-        text = re.sub(r"<[^>]+>","",text)
-        text = re.sub("\\\\n","",text)
-        text = re.sub("\\\\u.{4}","",text)
-        text = re.sub("\\\\\"","\"",text)
-        text = re.sub("\/[^\/]+\/","",text)
-        text = re.sub("\[[^\]]+\]","",text)
+        text = re.sub(r"\\","\\",text)
         text = re.sub("%r%rNew.+$","",text)
-        #text = re.sub(r"[┌─┐┴└┘├┼┤┬]","%b",text)
         return text
 
     def isInt(self, s):
