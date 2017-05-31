@@ -7,16 +7,16 @@ class BotElWeather():
     def __init__(self, prnt):
         self.prnt = prnt
 
-    def getWeather(self, passed, leader=None):
+    def getWeather(self, passed, requester=None, leader=None):
         if leader == None: leader = "\""
+        if requester == None: requester = "Somebody"
         if len(passed) == 1 and self.isInt(passed[0]):
             arg = passed[0]
         else:
             arg = "+".join(passed)
         s_passed = " ".join(passed)
-        #print("Fetching wttr.in/{}".format(arg))
-        #print("Fetching weather for {}".format(s_passed))
-        url = "http://wttr.in/{}?1n".format(arg)
+        self.prnt.output("{} requested the weather for {}".format(requester, s_passed))
+        url = "http://wttr.in/{}?1nT".format(arg)
         req = urllib.request.Request(
             url,
             data=None,
