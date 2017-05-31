@@ -13,10 +13,10 @@ class BotElWeather():
         if len(passed) == 1 and self.isInt(passed[0]):
             arg = passed[0]
         else:
-            arg = "+".join(passed)
-        s_passed = " ".join(passed)
-        self.prnt.output("{} requested the weather for {}".format(requester, s_passed))
+            arg = "+".join(passed.split(" "))
+        self.prnt.output("{} requested the weather for {}".format(requester, passed))
         url = "http://wttr.in/{}?1nT".format(arg)
+        self.prnt.output("Sending request: {}".format(url))
         req = urllib.request.Request(
             url,
             data=None,
@@ -42,6 +42,7 @@ class BotElWeather():
         text = re.sub("\/[^\/]+\/","",text)
         text = re.sub("\[[^\]]+\]","",text)
         text = re.sub("%r%rNew.+$","",text)
+        text = re.sub(r"[┌─┐┴└┘├┼┤┬]","%b",text)
         return text
 
     def isInt(self, s):
