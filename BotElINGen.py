@@ -22,6 +22,7 @@ class BotElINGen():
         self.knowledge = ["Astronomy","Biology","Literature","Aircraft","American Football","Football","Baseball","Sumo","Giant Robot Anime","German Cuisine","Catholicism","Islam","Buddhism","Shinto","Architecture","Eschatology","Numinology","Role-Playing Games","Spelunking","Parliamentary Procedure","Olympic History","18th-Century Botanical Manuals","Photography","Marine Biology","Entomology","Archaeology"]
         self.language = ["Mandarin","Spanish","English","Hindi","Arabic","Portuguese","Bengali","Russian","Japanese","Punjabi","German","Javanese","Wu","Malay","Telugu","Vietnamese","Korean","French","Marathi","Tamil","Urdu","Turkish","Italian","Yue (Cantonese)", "Thai", "Latin", "Greek", "Ancient Egyptian", "Apache", "Ainu", "Aleut", "Inuit", "Mayan"]
 
+<<<<<<< HEAD
     def createCharacter(self, args=None, ret=False):
         # Parse arguments
         name = None
@@ -55,6 +56,18 @@ class BotElINGen():
         self.characters[fullid]["name"] = name or random.choice(self.namelist)
         self.characters[fullid]["type"] = choir or random.choice(self.types[side])
         self.characters[fullid]["word"] = word or random.choice(self.words[side])
+=======
+    def createCharacter(self, name=None, side=None, ret=False):
+        name = name or random.choice(self.namelist)
+        id = random.randint(10000,99999)
+        fullid = "{}{}".format(name,id)
+        self.characters[fullid] = dict()
+        self.characters[fullid]["name"] = name
+        if side not in ["angel","demon"]:
+            side = random.choice(["angel","demon"])
+        self.characters[fullid]["type"] = random.choice(self.types[side])
+        self.characters[fullid]["word"] = random.choice(self.words[side])
+>>>>>>> master
         self.characters[fullid]["attunements"] = ["{} of {}".format(self.characters[fullid]["type"], self.characters[fullid]["word"])]
         forces = {"Corporeal":1, "Ethereal":1, "Celestial":1}
         while sum(forces.values()) < self.MAXFORCES:
