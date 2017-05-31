@@ -37,9 +37,10 @@ class BotElWeather():
 
 
     def sanitize(self, text):
-        text = re.sub(r"\n","%r",text)
-        text = re.sub(r" ","%b",text)
-        #text = re.sub(r"\\","\\",text)
+        text = re.sub(r"\n", "%r", text)
+        text = re.sub(r" ", "%b", text)
+        text = re.sub(r"&quot;", "\"", text)
+        text = re.sub(r"\\","\\\\",text)
         #text = re.sub("%r%rNew.+$","",text) # Don't think I need this anymore
         return text
 
