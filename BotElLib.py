@@ -287,6 +287,6 @@ class BotElLib:
             re.compile(r"([^\[]+) \[to {0}\]: inchar[ ]?(.*)".format(self.name)): self.inchar,
             re.compile(r"{0} pages: command (.+)".format(self.owner)): self.cmd,
             re.compile(r"([^\[]+) \[to {0}\]: draw".format(self.name)): self.draw,
-            re.compile(r"([^\[]+) \[to {0}\]: weather (.+)".format(self.name): self.weather)
+            re.compile(r"([^\[]+) \[to {0}\]: weather (.+)".format(self.name)): self.weather)
 #            re.compile(r"([^\[]+) \[to {0}\]: kellyanne".format(self.name)): self.kellyanne
         }
