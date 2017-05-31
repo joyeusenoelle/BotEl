@@ -4,18 +4,18 @@ class BotElWeather():
     """ Uses wttr.in to fetch the current weather forecast for a given location.
     """
 
-    def __init__(self):
-        pass
+    def __init__(self, prnt):
+        self.prnt = prnt
 
     def getWeather(self, passed, leader=None):
         if leader == None: leader = "\""
-        if len(passed) == 1 and isInt(passed[0]):
+        if len(passed) == 1 and self.isInt(passed[0]):
             arg = passed[0]
         else:
             arg = "+".join(passed)
         s_passed = " ".join(passed)
-        print("Fetching wttr.in/{}".format(arg))
-        print("Fetching weather for {}".format(s_passed))
+        #print("Fetching wttr.in/{}".format(arg))
+        #print("Fetching weather for {}".format(s_passed))
         url = "http://wttr.in/{}?1n".format(arg)
         req = urllib.request.Request(
             url,
@@ -29,7 +29,7 @@ class BotElWeather():
         except:
             return "{}Sorry, I couldn't connect.".format(leader)
 
-        return "quote {}".format(sanitize(weather))
+        return "quote {}".format(self.sanitize(weather))
 
     def sanitize(self, text):
         text = re.sub(r"\n","%r",text)

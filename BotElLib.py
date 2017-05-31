@@ -3,6 +3,7 @@ import BotElMarkov as markov
 import BotElWiki as wiki
 import BotElLog as logger
 import BotElINGen as ingen
+import BotElWeather as weather
 import importlib as imp
 from time import sleep
 
@@ -40,6 +41,7 @@ class BotElLib:
         self.wiki = wiki.BotElWiki(self.prnt)
         self.logger = logger.BotElLog(self.prnt)
         self.ingen = ingen.BotElINGen(self.prnt)
+        self.weather = weather.BotElWeather(self.prnt)
         self.responses = ["It is certain.",
             "It is decidedly so.",
             "Without a doubt.",
@@ -134,6 +136,11 @@ class BotElLib:
             requested topic.
         """
         return self.wiki.getWiki(match.group(2), match.group(1), self.ooc)
+
+    def weather(self, match):
+        """ Returns the weather report for the requested location.
+        """
+        return self.weather.getWeather(match.group(2), self.ooc)
 
     def lstart(self, match):
         """ Start logging if there isn't a log running.
@@ -280,5 +287,6 @@ class BotElLib:
             re.compile(r"([^\[]+) \[to {0}\]: inchar[ ]?(.*)".format(self.name)): self.inchar,
             re.compile(r"{0} pages: command (.+)".format(self.owner)): self.cmd,
             re.compile(r"([^\[]+) \[to {0}\]: draw".format(self.name)): self.draw,
+            re.compile(r"([^\[]+) \[to {0}\]: weather (.+)".format(self.name): self.weather)
 #            re.compile(r"([^\[]+) \[to {0}\]: kellyanne".format(self.name)): self.kellyanne
         }
