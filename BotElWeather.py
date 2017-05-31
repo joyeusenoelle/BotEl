@@ -29,7 +29,9 @@ class BotElWeather():
         except:
             return "{}Sorry, I couldn't connect.".format(leader)
 
-        return "quote {}".format(self.sanitize(weather))
+        wthr = self.sanitize(weather)
+        self.prnt.output("Sanitized: {}".format(wthr))
+        return "quote {}".format(wthr)
 
     def sanitize(self, text):
         text = re.sub(r"\n","%r",text)
