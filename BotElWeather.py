@@ -44,7 +44,7 @@ class BotElWeather():
         text = re.sub("\/[^\/]+\/","",text)
         text = re.sub("\[[^\]]+\]","",text)
         text = re.sub("%r%rNew.+$","",text)
-        text = re.sub(r"\\","\\",text)
+        #text = re.sub(r"\\","\\",text)
         #text = re.sub(r"[┌─┐┴└┘├┼┤┬]","%b",text)
         return text
 
