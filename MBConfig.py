@@ -31,7 +31,7 @@ class Config:
         mush_user = input("What is the bot's MUSH username? (This should be created in advance.) ").strip()
         mush_password = input("What is the bot's MUSH password? ").strip()
         mush_server = input("What is the URL or IP address of the MUSH server? ").strip()
-        mush_port = input("What is the port of the MUSH server? ").strip()
+        mush_port = int(input("What is the port of the MUSH server? ").strip())
         mush_owner = input("What is the MUSH username of the user who owns this bot? ").strip()
         connect_attempts = input("How many times should the bot try to connect before giving up? (Default: 10) ").strip()
         connect_attempts = 10 if connect_attempts == "" else int(connect_attempts)

@@ -17,19 +17,17 @@ All of these should be part of the base Python 3 installation, but you may want 
 
 ## Installation
 
-1. Copy `default_config.txt` to `config.txt`.
-2. Fill in the configuration values in `config.txt`. These will vary depending on the settings of the MUSH you're connecting to.
-3. That's it! You're done.
+MUSHBot can be run out of the box, but it requires some initial setup. The first time you run MUSHBot, it will ask you some questions to initialize its configuration; if you have the information handy this should take less than a minute.
 
 ## Usage
 
-Once `config.txt` is filled out, you can run MUSHBot from the command line:
+You can run MUSHBot from the command line:
 
     python MUSHBot.py
 
 (If you have separate installations of Python 2 and Python 3, remember to use the correct command to invoke Python 3.)
 
-MUSHBot will automatically connect and begin listening for input.
+After the initial setup, MUSHBot will automatically connect and begin listening for input.
 
 ## Notes
 
