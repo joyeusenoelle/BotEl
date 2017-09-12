@@ -1,9 +1,9 @@
 import re, random
-import BotElMarkov as markov
-import BotElWiki as wiki
-import BotElLog as logger
-import BotElINGen as ingen
-import BotElWeather as weather
+import libs.markov
+import libs.wiki
+import libs.log as logger
+import libs.ingen
+import libs.weather
 import importlib as imp
 from time import sleep
 
@@ -15,18 +15,19 @@ from time import sleep
 
 def reloadall():
     """ Reloads all of the custom modules. Needs to be integrated into the
-        new BotElLib object.
+        new Lib object.
     """
     imp.reload(markov)
     imp.reload(wiki)
     imp.reload(logger)
     getreminders()
 
-class BotElLib:
+class Lib:
     def __init__(self, name, owner, prnt):
-        """ Initialize BotElLib. Required parameters:
-            name (str) - the MUSH name of the BotEl object
-            owner (str) - the MUSH name of the BotEl object's owner
+        """ Initialize MUSHBot libraries. Required parameters:
+            name (str) - the MUSH name of the MUSHBot object
+            owner (str) - the MUSH name of the MUSHBot object's owner
+            prnt (object) - the object handling output.
         """
         self.name = str(name)
         self.owner = str(owner)
@@ -37,11 +38,11 @@ class BotElLib:
         self.makeRegexes()
         self.otherr = re.compile(r"([^\[]+) \[to {}\]: (.+)".format(self.name))
         self.getreminders()
-        self.markov = markov.BotElMarkov(self.prnt)
-        self.wiki = wiki.BotElWiki(self.prnt)
-        self.logger = logger.BotElLog(self.prnt)
-        self.ingen = ingen.BotElINGen(self.prnt)
-        self.weather = weather.BotElWeather(self.prnt)
+        self.markov = markov.Markov(self.prnt)
+        self.wiki = wiki.Wiki(self.prnt)
+        self.logger = logger.Log(self.prnt)
+        self.ingen = ingen.INGen(self.prnt)
+        self.weather = weather.Weather(self.prnt)
         self.responses = ["It is certain.",
             "It is decidedly so.",
             "Without a doubt.",
@@ -89,30 +90,30 @@ class BotElLib:
                 return func(match)
 
         # Preserving order without sorting.
-        # If someone has said something to BotEl that it can't recognize
+        # If someone has said something to MUSHBot that it can't recognize
         match = self.otherr.search(text)
         if match:
             return self.other(match)
 
     def setic(self, match):
-        """ Is an in-character scene running? Then add a prefix to mark BotEl
-            as OOC (out of character). This triggers if BotEl sees a scene
-            start or if an on-MUSH object tells BotEl a scene is in progress
-            when BotEl connects.
+        """ Is an in-character scene running? Then add a prefix to mark MUSHBot
+            as OOC (out of character). This triggers if MUSHBot sees a scene
+            start or if an on-MUSH object tells MUSHBot a scene is in progress
+            when MUSHBot connects.
         """
         self.ooc = ">"
         return None
 
     def setooc(self, match):
         """ Is the in-character scene over? Then remove the prefix from
-            BotEl's text.
+            MUSHBot's text.
         """
         self.ooc = None
         return None
 
     def amiooc(self, match):
-        """ Finds out whether BotEl is set to use an prefix to mark its text as
-            OOC (out-of-character), and indicates the prefix BotEl is using
+        """ Finds out whether MUSHBot is set to use an prefix to mark its text as
+            OOC (out-of-character), and indicates the prefix MUSHBot is using
             if so.
         """
         if self.ooc == None:
@@ -121,7 +122,7 @@ class BotElLib:
             return "{}We might be in a scene, so I'm using this prefix: {}".format(self.ooc or ">",self.ooc)
 
     def redesc(self, match):
-        """ BotEl's owner can update the on-MUSH string describing what BotEl can do.
+        """ MUSHBot's owner can update the on-MUSH string describing what MUSHBot can do.
         """
         return "@set me=STR-WHATCANIDO:{}\np {}=Updated STR-WHATCANIDO.\n".format(match.group(1), self.owner)
 
@@ -169,7 +170,7 @@ class BotElLib:
             return "{}I've stopped logging. {}".format(self.ooc or "\"", output)
 
     def globalr(self, match):
-        """ If someone has sent BotEl a global greet, respond in kind.
+        """ If someone has sent MUSHBot a global greet, respond in kind.
         """
         if match.group(2)[-1] != "s":
             emote = match.group(2)
@@ -178,7 +179,7 @@ class BotElLib:
         return "{} {}".format(emote, match.group(1))
 
     def help(self, match):
-        """ Quotes the on-MUSH string detailing BotEl's capabilities.
+        """ Quotes the on-MUSH string detailing MUSHBot's capabilities.
         """
         return "quote [u(me/STR-WHATCANIDO)]"
 
@@ -232,7 +233,7 @@ class BotElLib:
         return "quote {}".format(character)
 
     def cmd(self, match):
-        """ BotEl's owner can ask BotEl to execute arbitrary MUSH commands.
+        """ MUSHBot's owner can ask MUSHBot to execute arbitrary MUSH commands.
             (This is limited to commands the bot can execute.)
         """
         return "{}".format(match.group(1))
@@ -254,8 +255,8 @@ class BotElLib:
 #        return "{}'{} {}".format(self.ooc or "",match.group(1),tweet)
 
     def other(self,match):
-        """ If the text is directed to BotEl, but it doesn't match any of the
-            regular expressions, BotEl will respond with:
+        """ If the text is directed to MUSHBot, but it doesn't match any of the
+            regular expressions, MUSHBot will respond with:
             * an 8-Ball answer if the text is a question
             * "I didn't understand" otherwise
         """

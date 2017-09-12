@@ -1,6 +1,6 @@
 import re
 
-class BotElConfig:
+class Config:
     def __init__(self, filename=None):
         self.filename = filename or "config.txt"
         self.options = dict()

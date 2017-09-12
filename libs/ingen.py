@@ -1,7 +1,7 @@
 import random
 from datetime import datetime
 
-class BotElINGen():
+class INGen():
     """ Creates random In Nomine characters.
     """
     def __init__(self, prnt=None, maxforces=None):

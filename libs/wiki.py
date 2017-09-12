@@ -1,6 +1,6 @@
 import re, urllib.request, urllib.parse
 
-class BotElWiki():
+class Wiki():
     """ Fetches the introduction of a Wikipedia article and strips it of
         characters that aren't MUSH-safe.
     """

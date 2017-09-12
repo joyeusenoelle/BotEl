@@ -1,13 +1,13 @@
 import telnetlib as tn
 import importlib as imp
-import BotElLib as bel
-import BotElConfig as config
+import MBLib as bel
+import MBConfig as config
 from time import sleep
 from datetime import datetime
 import sys
 
-class BotEl:
-    VERSION = "0.3.2"
+class MUSHBot:
+    VERSION = "0.4.0"
 
     def __init__(self, verbose=False, configfile=None):
         bec = config.BotElConfig(configfile)
@@ -85,10 +85,10 @@ class BotEl:
     def getlibs(self, init):
         if not init:
             imp.reload(bel)
-        self.libraries = bel.BotElLib(self.username, self.owner, self)
+        self.libraries = bel.Lib(self.username, self.owner, self)
 
 if __name__ == "__main__":
     verbose = True if "-v" in sys.argv else False
-    be = BotEl(verbose)
+    be = MUSHBot(verbose)
     be.start()
     be.listen()
