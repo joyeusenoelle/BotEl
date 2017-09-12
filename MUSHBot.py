@@ -7,7 +7,7 @@ from datetime import datetime
 import sys
 
 class MUSHBot:
-    VERSION = "0.4.0"
+    VERSION = "0.4.1"
 
     def __init__(self, verbose=False, configfile=None):
         bec = config.Config()
