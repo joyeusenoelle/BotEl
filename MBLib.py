@@ -1,9 +1,9 @@
 import re, random
-import libs.markov
-import libs.wiki
+import libs.markov as markov
+import libs.wiki as wiki
 import libs.log as logger
-import libs.ingen
-import libs.weather
+import libs.ingen as ingen
+import libs.weather as weather
 import importlib as imp
 from time import sleep
 

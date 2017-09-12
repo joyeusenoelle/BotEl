@@ -10,8 +10,8 @@ class MUSHBot:
     VERSION = "0.4.0"
 
     def __init__(self, verbose=False, configfile=None):
-        bec = config.BotElConfig(configfile)
-        options = bec.getConfig("General")
+        bec = config.Config()
+        options = bec.getConfig()
         self.verbose = True if (options["VERBOSE"] == "true" or verbose == True) else False
         self.logfile = self.loginit()
         self.username = options["MUSH_USERNAME"]
@@ -22,11 +22,11 @@ class MUSHBot:
         self.attempts = int(options["CONNECT_ATTEMPTS"]) or 10
         self.getlibs(True)
         self.buffer = ""
-        self.output("BotEl v{} starting up.".format(self.VERSION))
+        self.output("MUSHBot v{} starting up.".format(self.VERSION))
 
     def loginit(self):
         tn = datetime.now()
-        return "logs/BotEl-{}-{}-{}.log".format(tn.year, tn.month, tn.day)
+        return "logs/{}-{}-{}.log".format(tn.year, tn.month, tn.day)
 
     def output(self, message, nolog=False):
         if self.verbose == True:
