@@ -1,6 +1,6 @@
 import re, urllib.request, urllib.parse, sys
 
-class BotElWeather():
+class Weather():
     """ Uses wttr.in to fetch the current weather forecast for a given location.
     """
 

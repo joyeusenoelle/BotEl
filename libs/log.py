@@ -3,14 +3,14 @@ import random as r
 import re
 import ftplib
 
-class BotElLog():
+class Log():
     """ Logs text into a file.
     """
     def __init__(self, prnt, bec=None):
         self.prnt = prnt
         if bec == None:
-            import BotElConfig
-            bec = BotElConfig.BotElConfig()
+            import config
+            bec = config.Config()
         options = bec.getConfig("InputLog")
         self.prefix = options["LOG_PREFIX"] or "Saminga"
         self.username = options["LOG_USERNAME"]

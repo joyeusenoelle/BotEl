@@ -1,14 +1,14 @@
 from random import choice
 
-class BotElMarkov():
+class Markov():
     """ Creates Markov-chain paragraphs out of corpus texts.
     """
     def __init__(self, prnt):
         self.prnt = prnt
         self.EOS = ['.', '?', '!']
-        self.leodict = self.gtext("leo.txt")
-        self.kaidict = self.gtext("kai.txt")
-        self.arctrekdict = self.gtext("arctrek.txt")
+        self.leodict = self.gtext("../markov/leo.txt")
+        self.kaidict = self.gtext("../markov/kai.txt")
+        self.arctrekdict = self.gtext("../markov/arctrek.txt")
         self.dicts = {"leo":self.leodict,"kai":self.kaidict,"arctrek":self.arctrekdict}
 
     def buildDict(self, words):
@@ -64,7 +64,7 @@ class BotElMarkov():
         return ' '.join(word_list)
 
     def getChain(self, corpus, requester, leader=None):
-        """ Exposes the chaining mechanism to BotEl.
+        """ Exposes the chaining mechanism to MUSHBot.
         """
         if leader == None: leader = ""
         self.prnt.output("{} requested a markov chain for {}.".format(requester, corpus))
