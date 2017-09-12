@@ -4,28 +4,32 @@ import MBLib as bel
 import MBConfig as config
 from time import sleep
 from datetime import datetime
-import sys
+import sys, os
 
 class MUSHBot:
-    VERSION = "0.4.1"
+    VERSION = "0.4.2"
 
     def __init__(self, verbose=False, configfile=None):
         bec = config.Config()
-        options = bec.getConfig()
-        self.verbose = True if (options["VERBOSE"] == "true" or verbose == True) else False
+        self.options = bec.getConfig()
+        self.verbose = True if (self.options["VERBOSE"] == "true" or verbose == True) else False
         self.logfile = self.loginit()
-        self.username = options["MUSH_USERNAME"]
-        self.password = options["MUSH_PASSWORD"]
-        self.server = options["MUSH_SERVER"]
-        self.port = int(options["MUSH_PORT"])
-        self.owner = options["MUSH_OWNER"]
-        self.attempts = int(options["CONNECT_ATTEMPTS"]) or 10
+        self.username = self.options["MUSH_USERNAME"]
+        self.password = self.options["MUSH_PASSWORD"]
+        self.server = self.options["MUSH_SERVER"]
+        self.port = int(self.options["MUSH_PORT"])
+        self.owner = self.options["MUSH_OWNER"]
+        self.attempts = int(self.options["CONNECT_ATTEMPTS"]) or 10
         self.getlibs(True)
         self.buffer = ""
         self.output("MUSHBot v{} starting up.".format(self.VERSION))
 
     def loginit(self):
         tn = datetime.now()
+        try:
+            os.makedirs("logs")
+        except OSError as e:
+            pass
         return "logs/{}-{}-{}.log".format(tn.year, tn.month, tn.day)
 
     def output(self, message, nolog=False):
@@ -85,7 +89,7 @@ class MUSHBot:
     def getlibs(self, init):
         if not init:
             imp.reload(bel)
-        self.libraries = bel.Lib(self.username, self.owner, self)
+        self.libraries = bel.Lib(self.username, self.owner, self, self.options)
 
 if __name__ == "__main__":
     verbose = True if "-v" in sys.argv else False

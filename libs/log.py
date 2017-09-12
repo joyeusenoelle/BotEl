@@ -6,18 +6,15 @@ import ftplib
 class Log():
     """ Logs text into a file.
     """
-    def __init__(self, prnt, bec=None):
+    def __init__(self, prnt, config):
         self.prnt = prnt
-        if bec == None:
-            import config
-            bec = config.Config()
-        options = bec.getConfig("InputLog")
-        self.prefix = options["LOG_PREFIX"] or "Saminga"
-        self.username = options["LOG_USERNAME"]
-        self.password = options["LOG_PASSWORD"]
-        self.server = options["LOG_SERVER"]
-        self.cwd = options["LOG_CWD"]
-        self.url = options["LOG_URL"]
+        self.options = config
+        self.prefix = self.options["LOG_PREFIX"] or "Saminga"
+        self.username = self.options["LOG_USERNAME"]
+        self.password = self.options["LOG_PASSWORD"]
+        self.server = self.options["LOG_SERVER"]
+        self.cwd = self.options["LOG_CWD"]
+        self.url = self.options["LOG_URL"]
         self.connr = re.compile(r".+ has [disre]*connected.")
         self.curlog = None
 

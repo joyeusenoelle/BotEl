@@ -23,15 +23,17 @@ def reloadall():
     getreminders()
 
 class Lib:
-    def __init__(self, name, owner, prnt):
+    def __init__(self, name, owner, prnt, config):
         """ Initialize MUSHBot libraries. Required parameters:
             name (str) - the MUSH name of the MUSHBot object
             owner (str) - the MUSH name of the MUSHBot object's owner
             prnt (object) - the object handling output.
+            config (dict) - the current configuration
         """
         self.name = str(name)
         self.owner = str(owner)
         self.prnt = prnt
+        self.options = config
         self.ooc = None
         self.logging = False
         self.reminders = {}
@@ -40,7 +42,7 @@ class Lib:
         self.getreminders()
         self.markov = markov.Markov(self.prnt)
         self.wiki = wiki.Wiki(self.prnt)
-        self.logger = logger.Log(self.prnt)
+        self.logger = logger.Log(self.prnt, self.options)
         self.ingen = ingen.INGen(self.prnt)
         self.weather = weather.Weather(self.prnt)
         self.responses = ["It is certain.",
