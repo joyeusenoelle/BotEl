@@ -104,16 +104,14 @@ class Lib:
             when MUSHBot connects.
         """
         self.ooc = ">"
-        self.lstart(None)
-        return None
+        return self.lstart(None)
 
     def setooc(self, match):
         """ Is the in-character scene over? Then remove the prefix from
             MUSHBot's text.
         """
         self.ooc = None
-        self.lstop()
-        return None
+        return self.lstop()
 
     def amiooc(self, match):
         """ Finds out whether MUSHBot is set to use an prefix to mark its text as
@@ -171,7 +169,7 @@ class Lib:
             output = self.logger.stopLog()
             self.curlog = None
             self.logging = False
-            return "{}I've stopped logging. {}".format(self.ooc or "\"", output)
+            return "{}{}".format(self.ooc or "\"", output)
 
     def globalr(self, match):
         """ If someone has sent MUSHBot a global greet, respond in kind.
