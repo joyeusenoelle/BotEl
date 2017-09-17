@@ -111,7 +111,7 @@ class Lib:
             MUSHBot's text.
         """
         self.ooc = None
-        return self.lstop()
+        return self.lstop(None)
 
     def amiooc(self, match):
         """ Finds out whether MUSHBot is set to use an prefix to mark its text as
