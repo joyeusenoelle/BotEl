@@ -169,7 +169,7 @@ class Lib:
             output = self.logger.stopLog()
             self.curlog = None
             self.logging = False
-            return "{}{}".format(self.ooc or "\"", output)
+            return "{}Okay, I stopped logging. {}".format(self.ooc or "\"", output)
 
     def globalr(self, match):
         """ If someone has sent MUSHBot a global greet, respond in kind.

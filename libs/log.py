@@ -63,7 +63,7 @@ class Log():
         with open(self.curlog, "a+") as file:
             htext = "</div>\n</body>\n</html>"
             file.write(htext)
-        output = "Okay, I stopped logging."
+        #output = "Okay, I stopped logging."
         if self.username and upload:
             with open(self.curlog, "rb+") as file:
                 with ftplib.FTP(self.server,self.username,self.password) as ftp:
