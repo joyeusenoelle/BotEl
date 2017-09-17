@@ -104,6 +104,7 @@ class Lib:
             when MUSHBot connects.
         """
         self.ooc = ">"
+        self.lstart(None)
         return None
 
     def setooc(self, match):
@@ -111,6 +112,7 @@ class Lib:
             MUSHBot's text.
         """
         self.ooc = None
+        self.lstop()
         return None
 
     def amiooc(self, match):
@@ -155,7 +157,7 @@ class Lib:
         else:
             self.logging = True
             self.players = None
-            if match.group(2):
+            if match != None and match.group(2):
                 self.players = match.group(2)
             self.logger.startLog(self.players)
             return "{}Okay, I'm logging.".format(self.ooc or "\"")
