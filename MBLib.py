@@ -4,6 +4,7 @@ import libs.wiki as wiki
 import libs.log as logger
 import libs.ingen as ingen
 import libs.weather as weather
+import libs.ddchar as ddchar
 import importlib as imp
 from time import sleep
 
@@ -256,6 +257,10 @@ class Lib:
 #        tweet = random.choice(text_strings).format(random.choice(us_places),random.choice(attack_types),random.choice(countries))
 #        return "{}'{} {}".format(self.ooc or "",match.group(1),tweet)
 
+    def ddchar(self):
+        chr = ddchar.get_character()
+        return "quote {}".format(chr.toString("%r"))
+
     def other(self,match):
         """ If the text is directed to MUSHBot, but it doesn't match any of the
             regular expressions, MUSHBot will respond with:
@@ -290,6 +295,7 @@ class Lib:
             re.compile(r"([^\[]+) \[to {0}\]: inchar[ ]?(.*)".format(self.name)): self.inchar,
             re.compile(r"{0} pages: command (.+)".format(self.owner)): self.cmd,
             re.compile(r"([^\[]+) \[to {0}\]: draw".format(self.name)): self.draw,
-            re.compile(r"([^\[]+) \[to {0}\]: weather (.+)".format(self.name)): self.weather
+            re.compile(r"([^\[]+) \[to {0}\]: weather (.+)".format(self.name)): self.weather,
+            re.compile(r"([^\[]+) \[to {0}\]: ddchar".format(self.name)): self.ddchar
 #            re.compile(r"([^\[]+) \[to {0}\]: kellyanne".format(self.name)): self.kellyanne
         }
