@@ -261,10 +261,14 @@ class Lib:
     def ddc(self):
         """ Creates a random first-level D&D 5e character.
         """
+        print("Creating a D&D character.")
         try:
             chr = self.ddchar()
+            print("Created.")
+            print(chr.toString())
             return "quote {}".format(chr.toString("%r"))
         except Exception as e:
+            print("I couldn't create a D&D character: {}".format(e))
             return "{}I tried to create a D&D character, and this is what happened: {}".format(self.ooc or "", e)
 
     def other(self,match):
