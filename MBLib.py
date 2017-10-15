@@ -38,7 +38,6 @@ class Lib:
         self.ooc = None
         self.logging = False
         self.reminders = {}
-        self.makeRegexes()
         self.otherr = re.compile(r"([^\[]+) \[to {}\]: (.+)".format(self.name))
         self.getreminders()
         self.markov = markov.Markov(self.prnt)
@@ -67,6 +66,7 @@ class Lib:
             "My sources say no.",
             "Outlook not so good.",
             "Very doubtful."]
+        self.makeRegexes()
 
     def getreminders(self):
         """ Get reminders from a text file.
