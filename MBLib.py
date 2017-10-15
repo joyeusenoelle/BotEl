@@ -258,8 +258,11 @@ class Lib:
 #        return "{}'{} {}".format(self.ooc or "",match.group(1),tweet)
 
     def ddchar(self):
-        chr = ddchar.get_character()
-        return "quote {}".format(chr.toString("%r"))
+        try:
+            chr = ddchar.get_character()
+            return "quote {}".format(chr.toString("%r"))
+        except Exception as e:
+            return "{}I tried to create a D&D character, and this is what happened: {}".format(self.ooc or "", e)
 
     def other(self,match):
         """ If the text is directed to MUSHBot, but it doesn't match any of the
