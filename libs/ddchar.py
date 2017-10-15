@@ -1,5 +1,16 @@
 import random
 
+class Randomizer:
+    def __init__(self, prnt=None):
+        self.prnt = prnt
+    def createCharacter(self):
+        CLASSES = [Barbarian, Bard, Cleric, Druid, FighterArch,FighterMelee,
+                   Monk, Paladin, Ranger, Rogue, Sorcerer, Warlock, Wizard]
+        cls = random.choice(CLASSES)
+        chr = cls()
+        self.prnt.output(chr.toString("%r"))
+
+
 # Global variables
 
 RACES = {

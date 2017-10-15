@@ -45,7 +45,7 @@ class Lib:
         self.logger = logger.Log(self.prnt, self.options)
         self.ingen = ingen.INGen(self.prnt)
         self.weather = weather.Weather(self.prnt)
-        self.ddchar = ddchar.get_character
+        self.ddchar = ddchar.Randomizer(self.prnt)
         self.responses = ["It is certain.",
             "It is decidedly so.",
             "Without a doubt.",
@@ -261,15 +261,10 @@ class Lib:
     def ddc(self):
         """ Creates a random first-level D&D 5e character.
         """
-        print("Creating a D&D character.")
-        try:
-            chr = self.ddchar()
-            print("Created.")
-            print(chr.toString())
-            return "quote {}".format(chr.toString("%r"))
-        except Exception as e:
-            print("I couldn't create a D&D character: {}".format(e))
-            return "{}I tried to create a D&D character, and this is what happened: {}".format(self.ooc or "", e)
+        character = self.ddchar.createCharacter()
+        character = character.replace("\n","%r")
+        character = character.replace("\t","%t")
+        return "quote {}".format(character)
 
     def other(self,match):
         """ If the text is directed to MUSHBot, but it doesn't match any of the
