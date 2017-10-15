@@ -46,6 +46,7 @@ class Lib:
         self.logger = logger.Log(self.prnt, self.options)
         self.ingen = ingen.INGen(self.prnt)
         self.weather = weather.Weather(self.prnt)
+        self.ddchar = ddchar.get_character
         self.responses = ["It is certain.",
             "It is decidedly so.",
             "Without a doubt.",
@@ -261,7 +262,7 @@ class Lib:
         """ Creates a random first-level D&D 5e character.
         """
         try:
-            chr = ddchar.get_character()
+            chr = self.ddchar()
             return "quote {}".format(chr.toString("%r"))
         except Exception as e:
             return "{}I tried to create a D&D character, and this is what happened: {}".format(self.ooc or "", e)
